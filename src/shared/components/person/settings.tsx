@@ -21,11 +21,9 @@ import {
   debounce,
   elementUrl,
   emDash,
-  enableNsfw,
   fetchCommunities,
   fetchThemeList,
   fetchUsers,
-  getLanguages,
   myAuth,
   myAuthRequired,
   personToChoice,
@@ -643,22 +641,20 @@ export class Settings extends Component<any, SettingsState> {
               />
             </div>
           </form>
-          {enableNsfw(this.state.siteRes) && (
-            <div className="form-group">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  id="user-show-nsfw"
-                  type="checkbox"
-                  checked={this.state.saveUserSettingsForm.show_nsfw}
-                  onChange={linkEvent(this, this.handleShowNsfwChange)}
-                />
-                <label className="form-check-label" htmlFor="user-show-nsfw">
-                  {i18n.t("show_nsfw")}
-                </label>
-              </div>
+          <div className="form-group">
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                id="user-show-nsfw"
+                type="checkbox"
+                checked={this.state.saveUserSettingsForm.show_nsfw}
+                onChange={linkEvent(this, this.handleShowNsfwChange)}
+              />
+              <label className="form-check-label" htmlFor="user-show-nsfw">
+                {i18n.t("show_nsfw")}
+              </label>
             </div>
-          )}
+          </div>
           <div className="form-group">
             <div className="form-check">
               <input
@@ -1058,11 +1054,11 @@ export class Settings extends Component<any, SettingsState> {
   }
 
   handleInterfaceLangChange(i: Settings, event: any) {
+    const newLang = event.target.value ?? "browser";
+    i18n.changeLanguage(newLang === "browser" ? navigator.languages : newLang);
+
     i.setState(
       s => ((s.saveUserSettingsForm.interface_language = event.target.value), s)
-    );
-    i18n.changeLanguage(
-      getLanguages(i.state.saveUserSettingsForm.interface_language).at(0)
     );
   }
 

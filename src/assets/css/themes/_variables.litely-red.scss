@@ -1,0 +1,9 @@
+@import "variables.darkly";
+
+$secondary: #c80000;
+$danger: darken($primary, 24%);
+
+$theme-colors: (
+  "secondary": $secondary,
+  "danger": $danger,
+);
